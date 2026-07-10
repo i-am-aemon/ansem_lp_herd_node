@@ -1,0 +1,38 @@
+{
+  "cellId": "ansem-herd",
+  "label": "ANSEM Herd Node",
+  "ansemMint": "9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump",
+  "trackedWallet": "HpJbzERP44V21mKGRDDUArb9JJaL9NdPSgXzZ9uyieVB",
+  "wallets": {
+    "main": "",
+    "lp": "",
+    "operator": "",
+    "ansemDest": ""
+  },
+  "feeSplit": {
+    "ansemSend": 0.05,
+    "ansemHold": 0.05,
+    "reserve": 0.05,
+    "reinvest": 0.85,
+    "indexBurn": 0,
+    "aemonDonate": 0
+  },
+  "routes": null,
+  "runtime": {
+    "dryRun": true,
+    "simulationMode": true,
+    "demoMode": false,
+    "operatorMode": "cover",
+    "nodeActiveLimit": 10,
+    "apeMaxAgeMinutes": 15,
+    "apeMinLiqUsd": 500,
+    "pairMinAnsem": 5,
+    "reservePct": 0.05
+  },
+  "notes": [
+    "Stay minimal: pair floors first, then deepen by rank toward the controller. Live: join HERD_POOL.",
+    "Fees default 5% HERD / 5% ANSEM hold / 5% SOL / 85% pools.",
+    "Private keys only in .env — never chat or HTTP forms.",
+    "Controller = hardcoded @i_am_aemon map book in src/constants.js (not env)."
+  ]
+}

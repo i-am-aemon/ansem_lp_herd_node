@@ -1,0 +1,24 @@
+\chapter{Fee Flywheel}
+
+\section{Loop}
+
+\begin{lstlisting}
+probe  -> SOL mark + W1 positions / fees
+claim  -> claimPositionFee on W1
+sweep  -> SOL W1 -> W2
+route  -> split spendable USD
+leg    -> jupiter_buy_send (70%) + sol_reserve (30%)
+summary-> tick_end + portfolio snapshots
+\end{lstlisting}
+
+\textbf{Not burn.} Bought ANSEM is sent to \texttt{ANSEM\_DEST\_WALLET}.
+
+\section{Dry vs live}
+
+Dry when \texttt{DRY\_RUN=true} or \texttt{SIMULATION\_MODE=true} (defaults). Live only when both are false and \texttt{DEMO\_PUBLIC} is false.
+
+\section{ANSEM mint}
+
+\begin{lstlisting}
+9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump
+\end{lstlisting}

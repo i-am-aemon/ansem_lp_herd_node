@@ -1,0 +1,38 @@
+\chapter{Wallets and Custody}
+
+\section{Wallet map}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Role & Env & Signs \\
+\midrule
+Tracked (old book) & \texttt{TRACKED\_WALLET} & Never \\
+W0 Main & \texttt{MAIN\_WALLET} & Never \\
+W1 LP & \texttt{LP\_WALLET} + key & Yes --- claim, sweep \\
+W2 Operator & \texttt{OPERATOR\_WALLET} + key & Yes --- buy, send \\
+ANSEM dest & \texttt{ANSEM\_DEST\_WALLET} & Receive only \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Default tracked wallet:
+\begin{lstlisting}
+HpJbzERP44V21mKGRDDUArb9JJaL9NdPSgXzZ9uyieVB
+\end{lstlisting}
+
+\section{File model}
+
+\begin{lstlisting}
+PUBLIC  -> cell.json + .env.example
+PRIVATE -> .env               (chmod 600, never commit)
+LOGS    -> logs/              (events, ticks, tx.sqlite — no secrets)
+\end{lstlisting}
+
+\section{Non-negotiables}
+
+\begin{enumerate}
+  \item Do not put the old book private key in this node.
+  \item Do not commit secrets.
+  \item Do not enable live mode on a public Railway demo with keys uploaded.
+\end{enumerate}

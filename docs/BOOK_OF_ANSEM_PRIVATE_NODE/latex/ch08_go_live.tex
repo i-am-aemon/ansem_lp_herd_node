@@ -1,0 +1,22 @@
+\chapter{Go-Live Charter}
+
+\section{Checklist}
+
+\begin{enumerate}
+  \item \texttt{npm run doctor} clean; routes sum to 1; keys match.
+  \item \texttt{ANSEM\_DEST\_WALLET} set.
+  \item Several dry ticks with \texttt{tick\_end} in events.
+  \item No unexpected errors on happy path.
+  \item W1/W2 funded; LP on W1 if expecting claims.
+  \item Old book key \textbf{not} in secrets.
+  \item Local: \texttt{DRY\_RUN=false} \texttt{SIMULATION\_MODE=false}.
+  \item \texttt{DEMO\_PUBLIC} false for live.
+\end{enumerate}
+
+\section{Non-goals}
+
+Do not sign with the old book. Do not upload private keys to Railway for go-live. Do not burn ANSEM.
+
+\section{Rollback}
+
+Restore dry flags; pause interval on \texttt{/run}.

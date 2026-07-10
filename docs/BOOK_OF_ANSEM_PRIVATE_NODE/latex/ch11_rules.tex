@@ -1,0 +1,75 @@
+\chapter{Operator Rules Journey}
+
+\begin{quote}
+Day-1 productization. Rules print clearly. Dust goes into pools. One terminal. One DB.
+\end{quote}
+
+\section{One sentence}
+
+You keep the key. Capital seeds the tracking wallet's top~10 from the \textbf{lowest 24h} first.
+Leftover TOKEN in the wallet is \textbf{dust to accumulate into LPs} --- never ignore it, never re-buy blindly.
+
+\section{Hard caps (micro\_trader lesson)}
+
+\begin{tabular}{lrl}
+\textbf{Cap} & \textbf{Limit} & \textbf{Why} \\
+\hline
+Log files & 3 (\texttt{events.jsonl} + \texttt{ticks.jsonl} + \texttt{tx.jsonl}) & micro\_trader had $\sim$62 patterns \\
+Tx store & 1 (\texttt{logs/tx.sqlite} --- no Postgres) & They had 4 backends / 17 Neon tables \\
+Ops UI & 1 (\texttt{/run}) & They had 14 surfaces \\
+\end{tabular}
+
+\section{Operator modes (holder-based)}
+
+\texttt{CONTROLLER\_WALLET} is the reference. Flip \textbf{MODE} on \texttt{/run}
+(or \texttt{OPERATOR\_MODE} / \texttt{POST /api/operator-mode}):
+
+\begin{tabular}{ll}
+\textbf{Mode} & \textbf{What the bot does next} \\
+\hline
+\texttt{cover} & Min $\geq$5 ANSEM (and $\geq\sim\$1$ dual) in all controller top-N \\
+\texttt{mirror} & Reaccumulate toward controller weights; propose take-outs when overweight \\
+\texttt{ape} & Enter fresh TOKEN--ANSEM pairs at the pair-min floor \\
+\texttt{hold} & No seed / no trim proposals \\
+\end{tabular}
+
+Fees stay on Setup \texttt{/#config} --- not a seed mode.
+
+\textbf{Pair min:} $\max(\texttt{PAIR\_MIN\_ANSEM}, \texttt{PAIR\_MIN\_USD}/(2\times\text{ANSEM price}))$
+so new entries are never sub-dollar dust.
+
+\section{Capital floors}
+
+\begin{tabular}{lrl}
+\textbf{Floor} & \textbf{Default} & \textbf{Meaning} \\
+\hline
+Gas \texttt{SOL\_RESERVE} & 0.02 & Never spend \\
+Operating & 0.05 & Block ATA/buys; prefer \texttt{topup\_sol} \\
+Target & 0.08 & After ANSEM$\to$SOL recovery \\
+Rent / pair & $\sim$0.008 & Left by capped \texttt{buy\_ansem} \\
+Pair min USD & 1 & Dual-sided floor for new LPs \\
+\end{tabular}
+
+\textbf{Predictable trap:} dump all SOL $\to$ ANSEM, leave $\sim$0.005 $\to$ cannot open LPs
+(and may not even top up). Send $\sim$0.05--0.1 SOL if critically low.
+
+\section{Seed journey}
+
+\begin{enumerate}
+  \item Set MODE (\texttt{cover} $\to$ \texttt{mirror} when coverage done)
+  \item \texttt{topup\_sol} if below operating floor
+  \item Capped \texttt{buy\_ansem} (leave rent)
+  \item \textbf{Wallet census} --- deposit index dust you already hold
+  \item \texttt{buy\_token} only when no dust for that mint
+  \item \texttt{deposit} --- mins first in \textbf{cover}; deepen gaps in \textbf{mirror}
+  \item Sort = \textbf{dip24}; universe = \textbf{tracked\_top10}
+\end{enumerate}
+
+\section{Grep truth}
+
+\begin{verbatim}
+jq 'select(.code!=null)' logs/events.jsonl | tail
+curl -s localhost:8080/api/gates_status | jq .
+curl -s localhost:8080/api/operator-mode | jq .
+npm run alignment
+\end{verbatim}

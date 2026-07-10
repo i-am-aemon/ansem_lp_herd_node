@@ -1,0 +1,24 @@
+\chapter{What This Book Is}
+
+\begin{quote}
+\textit{Book of ANSEM Private Node:} A shared guide for the operator (\texttt{i\_am\_aemon}) and the coding agent---what this repo does, how custody works, and how we know a dry tick actually ran.
+\end{quote}
+
+\section{What this document is}
+
+This is \textbf{not} a product brochure. It is the written record of the private ANSEM Index node: why it exists, how money and keys move, how we observe ticks, and when we go live.
+
+If the PDF and git disagree, \textbf{trust git} and rebuild the book.
+
+\section{Central claim}
+
+\textbf{One private node, one fee path, old book read-only, keys local, observability that matches micro\_trader so we can prove dry ticks before live.}
+
+\section{Study status}
+
+\begin{itemize}
+  \item Private node runs locally on \texttt{:8080} with dry-run defaults.
+  \item Old book \texttt{HpJbzE\ldots} is tracked read-only ($\sim$94 pools).
+  \item Observability: \texttt{logs/events.jsonl}, \texttt{logs/ticks.jsonl}, \texttt{logs/tx.sqlite}.
+  \item Public hub on Railway is a different project (\texttt{ansemindex}).
+\end{itemize}

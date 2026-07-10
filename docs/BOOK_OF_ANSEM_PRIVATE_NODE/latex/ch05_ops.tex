@@ -1,0 +1,25 @@
+\chapter{Dashboard and Ops}
+
+Local bind: \texttt{127.0.0.1:8080}. Mutating APIs need \texttt{DASHBOARD\_PASSWORD} from \texttt{.env}.
+
+\section{Routes}
+
+\texttt{/} Setup · \texttt{/#config} fee mix · \texttt{/ansem} old-book · \texttt{/run} operator desk · \texttt{/pool} per-pool · \texttt{/whitepaper} · \texttt{/health}
+
+Legacy: \texttt{/fund} \texttt{/ops} \texttt{/seed} \texttt{/log} \texttt{/reports} $\to$ \texttt{/run}; \texttt{/config} \texttt{/manage} $\to$ \texttt{/#config}.
+
+\section{Commands}
+
+\begin{lstlisting}
+npm run init -- --keys
+npm run start
+npm run dry
+npm run doctor
+npm run alignment
+npm run cards
+npm run book
+\end{lstlisting}
+
+\section{Railway note}
+
+Public hub/keeper under project \texttt{ansemindex} is separate. This private repo stays local-first for live keys.

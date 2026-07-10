@@ -1,0 +1,29 @@
+\chapter{Fund Control}
+
+\begin{quote}
+Two planes: fee flywheel (where claimed fees go) and LP book (where deployed capital sits and where future capital should go).
+Take percent out. Close a pool. Point future funds here. The UI lives on \texttt{/run}.
+\end{quote}
+
+\section{Definitions}
+
+\begin{itemize}
+  \item \textbf{Book value} --- sum of node-wallet LP USD.
+  \item \textbf{Weight} --- pool value / book value.
+  \item \textbf{Target weight} --- operator intent for future capital.
+  \item \textbf{Gap} --- target $-$ current (positive = underweight).
+  \item \textbf{Redirect} --- when closed/off, send future capital to another key.
+\end{itemize}
+
+\section{Operator verbs}
+
+\begin{enumerate}
+  \item \textbf{Take \% out} --- withdraw $\sim$N\% LP $\to$ optional Jupiter sell $\to$ route proceeds (reserve / ANSEM / aemon / redeploy).
+  \item \textbf{Close} --- take 100\% + \texttt{mode=off} + optional \texttt{redirectTo}.
+  \item \textbf{Point future} --- set target weight + pin; Pass~2 / seed-plan / reinvest proposals prefer positive gaps.
+\end{enumerate}
+
+\section{Dashboard}
+
+\texttt{/run} desk · \texttt{/#config} fee mix · \texttt{/api/fund} snapshot · \texttt{/api/fund-plan} unsigned plans.
+No auto-sign. See also Ch.~9 (mechanics) and Ch.~3 (fee flywheel).

@@ -1,0 +1,14 @@
+\chapter{Pools and Nodes}
+
+A \textbf{node} is a TOKEN--ANSEM Meteora DAMM v2 pool you seed---not a validator.
+
+\section{Old book vs start list}
+
+\begin{itemize}
+  \item \textbf{Old book:} tracked wallet positions ($\sim$94) --- watch on \texttt{/ansem}.
+  \item \textbf{Start list:} \module{START\_LIST} in \module{src/lib/whitepaper.js} --- $\sim$\$1 floor per ticker.
+\end{itemize}
+
+\section{Adding liquidity}
+
+Import W1 into Phantom, deposit on \texttt{app.meteora.ag}, then probe with \texttt{npm run doctor} / dry tick. Programmatic reinvest is Phase~C (stub).

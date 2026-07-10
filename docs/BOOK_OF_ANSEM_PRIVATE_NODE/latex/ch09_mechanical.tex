@@ -1,0 +1,31 @@
+\chapter{How It Works Mechanically}
+
+\begin{quote}
+Old book = eyes. Phantom node = hands.
+0.02 gas $\cdot$ 0.05 operating $\cdot$ 5 ANSEM min per pair $\cdot$ coverage then depth.
+A node is a slice --- never auto-sign without Phantom.
+\end{quote}
+
+\section{Wallets}
+
+\begin{itemize}
+  \item \textbf{Old book} (\texttt{HpJbzE\ldots}) --- watch on \texttt{/ansem}. Never sign.
+  \item \textbf{Node wallet} --- fresh LP key in \texttt{.env}. Testground default: one wallet = LP + operator.
+  \item \textbf{ANSEM dest} --- same pubkey or cold receive-only.
+  \item \textbf{Keeper keys} (optional) --- \texttt{.env} only; never Railway demo.
+\end{itemize}
+
+\section{Capital policy}
+
+\texttt{deployable = max(0, SOL $-$ effectiveReserve)}. Operating floor 0.05; target 0.08 after \texttt{topup\_sol}.
+Buy ANSEM first (capped). Pass~1: $\geq$ 5 whole ANSEM dual-sided per ranked TOKEN--ANSEM pool. Pass~2+: deepen same order. USD in UI is estimate only.
+
+\section{Lifecycle}
+
+\texttt{NOT IN} $\to$ fund ($\geq$ operating SOL) $\to$ Meteora deposit $\to$ \texttt{IN / MONITOR} $\to$ Pass~2 top-up or \texttt{EXIT} (withdraw LP) $\to$ sell on Jupiter if you want cash.
+
+Exit is two steps: withdraw LP, then sell assets. \texttt{/run} shows ranked Next action; \texttt{GET /api/seed-plan} returns unsigned actions.
+
+\section{Why not all 94 pools}
+
+Old book $\sim$94 = watchlist. Start list $\sim$25 = sandbox. Ranking prefers ``good but down'' with liquidity. Auto-deposit of the full index is a non-goal.

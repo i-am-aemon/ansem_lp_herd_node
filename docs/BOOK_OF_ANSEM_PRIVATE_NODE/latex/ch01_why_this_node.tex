@@ -1,0 +1,27 @@
+\chapter{Why This Node}
+
+\section{Two repos, two jobs}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Repo & Role & Keys \\
+\midrule
+\texttt{ansemindex} & Public / read hub & Pubkeys only \\
+private cell & Operator node & \texttt{.env} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Same pattern as LifeNode vs public LIFE hub, and micro\_trader observability vs a holder-run keeper.
+
+\section{What we are testing}
+
+\begin{enumerate}
+  \item Read-only old book on \texttt{/ansem}.
+  \item New Phantom W1/W2; secrets never in HTTP bodies.
+  \item Node deposits on TOKEN--ANSEM pools ($\sim$\$1 floor).
+  \item Dry $\to$ live: claim $\to$ buy ANSEM $\to$ send.
+  \item Reports + whitepaper.
+  \item Railway demo without uploading private keys.
+\end{enumerate}

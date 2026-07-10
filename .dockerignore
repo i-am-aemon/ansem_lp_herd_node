@@ -1,0 +1,11 @@
+node_modules
+.env
+cell.json
+cell_secrets.env
+secrets
+logs
+reports
+.git
+*.md
+.dockerignore
+Dockerfile

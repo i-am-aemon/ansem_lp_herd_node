@@ -1,0 +1,34 @@
+\chapter{Observability}
+
+\section{Lineage}
+
+micro\_trader taught structured JSONL + \texttt{tick\_id}. This node stores money moves in SQLite \texttt{logs/tx.sqlite} (jsonl mirror). No Postgres.
+
+\section{Stores}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Store & Path \\
+\midrule
+Events & \texttt{logs/events.jsonl} \\
+Ticks & \texttt{logs/ticks.jsonl} \\
+Tx SQLite & \texttt{logs/tx.sqlite} \\
+Tx mirror & \texttt{logs/tx.jsonl} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Phases: \texttt{probe} $\to$ \texttt{claim} $\to$ \texttt{sweep} $\to$ \texttt{route} $\to$ \texttt{leg} $\to$ \texttt{summary}.
+
+Full contract: \module{docs/ALIGNMENT\_CONTRACT.md}. UI: \texttt{/run} Activity via \texttt{GET /api/tx}.
+
+\section{Prove a dry tick}
+
+\begin{lstlisting}
+npm run dry
+grep tick_end logs/events.jsonl | tail -1
+tail -n 20 logs/tx.jsonl
+\end{lstlisting}
+
+Refuse to confuse \textbf{ran} with \textbf{worked}.

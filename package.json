@@ -1,0 +1,36 @@
+{
+  "name": "ansem-herd-node",
+  "version": "0.1.0",
+  "description": "ANSEM Herd Node — fork ANSEM_LP_HERD_Node, Railway demo, live with local .env. No bot required.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "init": "node scripts/init.mjs",
+    "doctor": "node src/doctor.js",
+    "prestart": "node scripts/kill-port.mjs 8080",
+    "start": "node src/index.js",
+    "once": "MANUAL=true node src/index.js",
+    "dry": "DASHBOARD_ENABLED=false DRY_RUN=true SIMULATION_MODE=true MANUAL=true node src/index.js",
+    "seed": "node scripts/seed.mjs",
+    "seed:once": "node scripts/seed.mjs --once",
+    "seed:dry": "DRY_RUN=true SIMULATION_MODE=true node scripts/seed.mjs --dry",
+    "alignment": "node scripts/alignment_check.mjs",
+    "cards": "node scripts/token-cards.mjs",
+    "book": "bash scripts/build_book.sh",
+    "meteora:sync": "node scripts/sync-meteora.mjs",
+    "railway:sync-env": "node scripts/railway-sync-env.mjs",
+    "railway:deploy": "railway up --detach"
+  },
+  "dependencies": {
+    "@meteora-ag/cp-amm-sdk": "^1.4.4",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/web3.js": "^1.98.4",
+    "bn.js": "^5.2.4",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.4.7",
+    "pdfkit": "^0.17.1"
+  }
+}
