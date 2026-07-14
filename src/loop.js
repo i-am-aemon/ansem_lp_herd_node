@@ -606,6 +606,55 @@ async function executeLegs(legs, solUsd, dryRun) {
       });
       continue;
     }
+    if (leg.type === ROUTE_TYPES.PENNY_SPREAD) {
+      let proposals = [];
+      try {
+        const { buildBookRows } = await import('./lib/fund-plan.js');
+        const { buildPortfolio } = await import('./lib/portfolio.js');
+        let positions = [];
+        if (config.lpWallet) {
+          try {
+            const p = await buildPortfolio(config.lpWallet, config.ansemMint);
+            positions = p.positions || [];
+          } catch (_) {}
+        }
+        const book = buildBookRows(positions);
+        
+        // Find active pools with 0 value (not in pool)
+        const emptyActive = (book.rows || [])
+          .filter((r) => r.mode === 'active' && !r.inPool && r.pool)
+          .slice(0, 5) // propose up to 5 at a time to spread out
+          .map((r) => ({
+            ticker: r.ticker,
+            pool: r.pool,
+            mint: r.mint,
+            herd: Boolean(r.herd),
+            note: `Auto-seed penny deposit`,
+            links: {
+              meteora: `https://app.meteora.ag/pools/${r.pool}`,
+              jupiter: r.mint ? `https://jup.ag/swap/SOL-${r.mint}` : undefined,
+            },
+          }));
+        proposals = emptyActive;
+      } catch (e) {
+        // ignore
+      }
+      out.push({
+        ...leg,
+        status: dryRun ? 'dry_run' : 'propose',
+        note: 'Penny Spread proposal — Phantom deposit to seed empty active pools',
+        proposals,
+      });
+      trackPhase('fund', 'penny_spread_propose', {
+        status: 'ok',
+        usd: leg.usd,
+        detail: proposals.length > 0
+          ? proposals.map((p) => `seed:${p.ticker}`).join(',')
+          : 'no empty active pools to seed',
+        meta: { proposals },
+      });
+      continue;
+    }
     if (leg.type === ROUTE_TYPES.JUPITER_BUY_SEND) {
       out.push({
         ...(await executeBuySendLeg(leg, solUsd, dryRun)),

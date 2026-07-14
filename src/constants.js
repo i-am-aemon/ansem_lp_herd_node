@@ -60,4 +60,6 @@ export const ROUTE_TYPES = {
   SOL_RESERVE: 'sol_reserve',
   /** Re-add liquidity to Meteora (manual / Phase C) */
   METEORA_REINVEST: 'meteora_reinvest',
+  /** Auto-seed empty pools with a tiny "penny" deposit */
+  PENNY_SPREAD: 'penny_spread',
 };

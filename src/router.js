@@ -69,6 +69,12 @@ export function buildLegs(totalUsd) {
           action: 'meteora_reinvest',
           note: 'Phase C — add liquidity via app.meteora.ag with W1',
         };
+      case ROUTE_TYPES.PENNY_SPREAD:
+        return {
+          ...base,
+          action: 'penny_spread',
+          note: 'Auto-seed empty pools with a tiny deposit',
+        };
       default:
         return { ...base, action: route.type, note: route.note || 'unknown' };
     }
@@ -85,6 +91,7 @@ export function splitFees(totalUsd) {
     aemonDonate: by(ROUTE_TYPES.DONATE_SOL),
     reserve: by(ROUTE_TYPES.SOL_RESERVE),
     reinvest: by(ROUTE_TYPES.METEORA_REINVEST),
+    pennySpread: by(ROUTE_TYPES.PENNY_SPREAD),
     legs,
     total: Math.max(0, totalUsd),
   };

@@ -54,6 +54,7 @@ function normalizeFeeSplitInline(input = {}) {
     'aemonDonate',
     'reserve',
     'reinvest',
+    'pennySpread',
   ];
   const raw = {};
   for (const k of keys) {
@@ -72,7 +73,8 @@ function normalizeFeeSplitInline(input = {}) {
       indexBurn: 0,
       aemonDonate: 0,
       reserve: 0.05,
-      reinvest: 0.85,
+      reinvest: 0.75,
+      pennySpread: 0.10,
     };
   }
   if (Math.abs(sum - 1) > 1e-6) {
@@ -225,7 +227,8 @@ function buildConfig() {
       indexBurn: num('FEE_SPLIT_INDEX_BURN', cell.feeSplit?.indexBurn ?? 0),
       aemonDonate: num('FEE_SPLIT_AEMON_DONATE', cell.feeSplit?.aemonDonate ?? 0),
       reserve: num('FEE_SPLIT_RESERVE', cell.feeSplit?.reserve ?? 0.05),
-      reinvest: num('FEE_SPLIT_REINVEST', cell.feeSplit?.reinvest ?? 0.85),
+      reinvest: num('FEE_SPLIT_REINVEST', cell.feeSplit?.reinvest ?? 0.75),
+      pennySpread: num('FEE_SPLIT_PENNY_SPREAD', cell.feeSplit?.pennySpread ?? 0.10),
     }),
 
     routes: cell.routes || null,
@@ -313,6 +316,14 @@ export function defaultRoutes() {
       pct: fs.reinvest,
       type: ROUTE_TYPES.METEORA_REINVEST,
       note: 'Phase C — add liquidity back to pools',
+    });
+  }
+  if (fs.pennySpread > 0) {
+    routes.push({
+      id: 'penny_spread',
+      pct: fs.pennySpread,
+      type: ROUTE_TYPES.PENNY_SPREAD,
+      note: 'Auto-seed empty pools with a tiny deposit',
     });
   }
   return routes;
